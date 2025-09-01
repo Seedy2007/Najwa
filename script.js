@@ -25,10 +25,20 @@ const cardObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 
-projectCards.forEach((card) => cardObserver.observe(card));
+projectCards.forEach((card, index) => {
+  card.style.transitionDelay = `${index * 0.2}s`; // stagger delay
+  cardObserver.observe(card);
+});
 window.addEventListener("scroll", () => {
-  const scrollTop = window.scrollY;
-  const docHeight = document.body.scrollHeight - window.innerHeight;
-  const scrollPercent = (scrollTop / docHeight) * 100;
-  document.getElementById("scroll-bar").style.width = `${scrollPercent}%`;
+  const header = document.querySelector("header");
+  if (window.scrollY > 50) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+});
+window.addEventListener("scroll", () => {
+  const heroText = document.querySelector(".hero-text");
+  const offset = window.scrollY * 0.2;
+  heroText.style.transform = `translateY(${offset}px)`;
 });
