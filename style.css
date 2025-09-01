@@ -102,12 +102,10 @@ section p {
 }
 
 .project-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 1rem;
-  border-radius: 8px;
-  transition: transform 0.3s ease;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
+
 
 .project-card:hover {
   transform: translateY(-5px);
