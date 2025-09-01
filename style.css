@@ -54,7 +54,10 @@ nav a:hover {
 /* Hero Section */
 #hero {
   height: 100vh;
-  background: linear-gradient(to bottom right, #c0d6df, #f4f4f2);
+  background-image: url('hero.jpg'); /* Replace with your image */
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -158,4 +161,41 @@ footer {
 .slide-up.active {
   opacity: 1;
   transform: translateY(0);
+}
+.project-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.project-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+nav a {
+  position: relative;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: #c0d6df;
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+#scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: #c0d6df;
+  width: 0%;
+  z-index: 9999;
 }
