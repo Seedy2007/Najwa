@@ -154,3 +154,8 @@ footer {
   transform: translateY(40px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
+.fade-in.active,
+.slide-up.active {
+  opacity: 1;
+  transform: translateY(0);
+}
