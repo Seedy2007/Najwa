@@ -149,6 +149,18 @@ nav a:focus-visible {
   opacity: 1;
   transform: translateY(0);
 }
+.hero-text h2 {
+  color: var(--primary); /* still works well */
+}
+
+.hero-text p {
+  color: var(--text);
+}
+
+.scroll-cue {
+  color: var(--primary);
+}
+
 
 .hero-text h2 {
   font-size: 3rem;
@@ -486,3 +498,25 @@ header {
   transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+.fade-in,
+.slide-up {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-in.active,
+.slide-up.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+.contact-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.contact-animate.active {
+  opacity: 1;
+  transform: translateY(0);
+}
