@@ -68,3 +68,15 @@ const contactObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 
 contactObserver.observe(contactSection);
+const footer = document.querySelector("footer");
+
+const footerObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      footerObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+footerObserver.observe(footer);
