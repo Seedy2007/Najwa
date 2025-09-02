@@ -3,27 +3,7 @@
   --accent: #c0d6df;
   --bg: #f4f4f2;
   --text: #444;
-  --nav-text: #f4f4f2;
-  --card-title: #2c3e50;
 }
-body.dark {
-  --primary: #f4f4f2;
-  --bg: #2c3e50;
-  --accent: #c0d6df;
-  --text: #ccc;
-  --nav-text: #ffffff;
-  --card-title: #f4f4f2;
-
-}
-body.dark .project-card {
-  background-color: #1e1e1e;
-  border-color: #444;
-}
-body.dark .modal-content {
-  background-color: #1e1e1e;
-  color: var(--primary);
-}
-
 
 /* Reset & Base */
 * {
@@ -38,9 +18,6 @@ body {
   color: var(--primary);
   line-height: 1.6;
   scroll-behavior: smooth;
-}
-body {
-  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 html {
@@ -83,7 +60,7 @@ nav ul {
 }
 
 nav a {
-  color: var(--nav-text);
+  color: var(--bg);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -109,11 +86,10 @@ nav a:hover::after {
   width: 100%;
 }
 
-nav a:focus-visible {
+nav a:focus {
   outline: 2px dashed var(--accent);
   outline-offset: 4px;
 }
-
 
 /* Hero Section */
 #hero {
@@ -149,18 +125,6 @@ nav a:focus-visible {
   opacity: 1;
   transform: translateY(0);
 }
-.hero-text h2 {
-  color: var(--primary); /* still works well */
-}
-
-.hero-text p {
-  color: var(--text);
-}
-
-.scroll-cue {
-  color: var(--primary);
-}
-
 
 .hero-text h2 {
   font-size: 3rem;
@@ -247,7 +211,7 @@ section p {
 .project-card h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  color: var(--card-title);
+  color: var(--primary);
 }
 
 .project-card p {
@@ -464,59 +428,4 @@ footer.visible {
   .modal-text p {
     font-size: 0.95rem;
   }
-}
-#back-to-top {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--accent);
-  color: var(--primary);
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1000;
-}
-
-#back-to-top.show {
-  opacity: 1;
-}
-body {
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-.project-card,
-nav a,
-footer,
-header {
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-.project-card,
-.modal-content {
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-.fade-in,
-.slide-up {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-in.active,
-.slide-up.active {
-  opacity: 1;
-  transform: translateY(0);
-}
-.contact-animate {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.contact-animate.active {
-  opacity: 1;
-  transform: translateY(0);
 }
