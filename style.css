@@ -264,11 +264,6 @@ header.scrolled {
 html {
   scroll-behavior: smooth;
 }
-.hero-text {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-}
 
 .hero-text.visible {
   opacity: 1;
