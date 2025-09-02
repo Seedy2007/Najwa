@@ -80,3 +80,38 @@ const footerObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 
 footerObserver.observe(footer);
+const modal = document.getElementById("modal");
+const modalImage = document.getElementById("modal-image");
+const modalTitle = document.getElementById("modal-title");
+const modalDescription = document.getElementById("modal-description");
+const closeButton = document.querySelector(".close-button");
+
+document.querySelectorAll(".project-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const img = card.querySelector("img").src;
+    const title = card.querySelector("h3").textContent;
+    const desc = card.querySelector("p").textContent;
+
+    modalImage.src = img;
+    modalTitle.textContent = title;
+    modalDescription.textContent = desc;
+
+    modal.style.display = "flex";
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden"; // prevent background scroll
+  });
+});
+
+closeButton.addEventListener("click", () => {
+  modal.style.display = "none";
+  modal.classList.remove("show");
+  document.body.style.overflow = "auto";
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === modal) {
+    modal.style.display = "none";
+    modal.classList.remove("show");
+    document.body.style.overflow = "auto";
+  }
+});
