@@ -262,6 +262,7 @@ header.scrolled {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 html {
+  font-size: 18px;
   scroll-behavior: smooth;
 }
 
@@ -277,4 +278,20 @@ html {
   .hero-text p {
     font-size: 1rem;
   }
+}
+.cta-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: #2c3e50;
+  color: #f4f4f2;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cta-link:hover {
+  background-color: #c0d6df;
+  color: #2c3e50;
+  transform: translateY(-2px);
 }
