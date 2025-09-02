@@ -56,3 +56,15 @@ const heroObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 
 heroObserver.observe(heroText);
+const contactSection = document.querySelector(".contact-animate");
+
+const contactObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("active");
+      contactObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+contactObserver.observe(contactSection);
