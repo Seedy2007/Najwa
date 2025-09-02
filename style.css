@@ -267,7 +267,7 @@ header.scrolled {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 html {
-  font-size: 22px;
+  font-size: 20px;
   scroll-behavior: smooth;
 }
 
