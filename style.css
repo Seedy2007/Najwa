@@ -466,3 +466,28 @@ footer.visible {
   color: #fff;
   cursor: pointer;
 }
+.modal.show {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (max-width: 600px) {
+  .modal-content {
+    padding: 1rem;
+  }
+
+  .modal img {
+    border-radius: 4px;
+  }
+
+  .modal-text h3 {
+    font-size: 1.2rem;
+  }
+
+  .modal-text p {
+    font-size: 0.95rem;
+  }
+}
