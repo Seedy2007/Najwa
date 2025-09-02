@@ -44,3 +44,15 @@ window.addEventListener("scroll", () => {
   const offset = window.scrollY * 0.2;
   heroText.style.transform = `translateY(${offset}px)`;
 });
+const heroText = document.querySelector(".hero-text");
+
+const heroObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+      heroObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+
+heroObserver.observe(heroText);
