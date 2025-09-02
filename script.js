@@ -139,13 +139,6 @@ window.addEventListener("click", (e) => {
   }
 });
 
-// Dark mode toggle
-const themeToggle = document.getElementById("theme-toggle");
-
-themeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-});
-
 // Back to top button
 const backToTop = document.getElementById("back-to-top");
 
