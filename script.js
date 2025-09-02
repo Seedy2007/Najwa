@@ -95,14 +95,12 @@ document.querySelectorAll(".project-card").forEach(card => {
     modalTitle.textContent = title;
     modalDescription.textContent = desc;
 
-    modal.style.display = "flex";
     modal.classList.add("show");
     document.body.style.overflow = "hidden";
   });
 });
 
 closeButton.addEventListener("click", () => {
-  modal.style.display = "none";
   modal.classList.remove("show");
   document.body.style.overflow = "auto";
 });
