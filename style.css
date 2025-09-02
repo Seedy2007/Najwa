@@ -58,9 +58,10 @@ nav a:hover {
 #hero {
   height: 100vh;
   background-image: url('hero.jpg');
+  background-repeat: no-repeat;
   background-size: cover;
+  background-position: center center;
   background-attachment: fixed;
-  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,7 +125,11 @@ section p {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
 
 .project-card {
   background-color: #fff;
@@ -294,4 +299,18 @@ html {
   background-color: #c0d6df;
   color: #2c3e50;
   transform: translateY(-2px);
+}
+.project-card img {
+  max-width: 100%;
+  height: auto;
+}
+#hero.fade-in {
+  opacity: 0;
+  animation: fadeInHero 1.5s ease forwards;
+}
+
+@keyframes fadeInHero {
+  to {
+    opacity: 1;
+  }
 }
