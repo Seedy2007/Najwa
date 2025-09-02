@@ -90,15 +90,14 @@ document.querySelectorAll(".project-card").forEach(card => {
   card.addEventListener("click", () => {
     const img = card.querySelector("img").src;
     const title = card.querySelector("h3").textContent;
-    const desc = card.querySelector("p").textContent;
-
+    const desc = card.querySelector(".modal-details p[data-modal]")?.textContent || "";
     modalImage.src = img;
     modalTitle.textContent = title;
     modalDescription.textContent = desc;
 
     modal.style.display = "flex";
     modal.classList.add("show");
-    document.body.style.overflow = "hidden"; // prevent background scroll
+    document.body.style.overflow = "hidden";
   });
 });
 
