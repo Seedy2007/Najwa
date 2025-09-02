@@ -19,6 +19,16 @@ body {
   line-height: 1.6;
   scroll-behavior: smooth;
 }
+body {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body.dark {
+  --primary: #f4f4f2;
+  --bg: #2c3e50;
+  --accent: #c0d6df;
+  --text: #ccc;
+}
 
 html {
   font-size: 20px;
@@ -429,5 +439,24 @@ footer.visible {
   .modal-text p {
     font-size: 0.95rem;
   }
+}
+#back-to-top {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: var(--accent);
+  color: var(--primary);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+#back-to-top.show {
+  opacity: 1;
 }
 

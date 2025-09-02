@@ -32,6 +32,7 @@ projectCards.forEach((card, index) => {
 window.addEventListener("scroll", () => {
   const header = document.querySelector("header");
   const heroText = document.querySelector(".hero-text");
+  const scrollBar = document.getElementById("scroll-bar");
 
   // Nav fade-in
   if (window.scrollY > 50) {
@@ -43,7 +44,14 @@ window.addEventListener("scroll", () => {
   // Parallax effect
   const offset = window.scrollY * 0.2;
   heroText.style.transform = `translateY(${offset}px)`;
+
+  // Scroll progress bar
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  scrollBar.style.width = `${scrollPercent}%`;
 });
+
 const heroText = document.querySelector(".hero-text");
 
 const heroObserver = new IntersectionObserver((entries) => {
@@ -110,4 +118,22 @@ window.addEventListener("click", (e) => {
     modal.classList.remove("show");
     document.body.style.overflow = "auto";
   }
+});
+const themeToggle = document.getElementById("theme-toggle");
+
+themeToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+});
+const backToTop = document.getElementById("back-to-top");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    backToTop.classList.add("show");
+  } else {
+    backToTop.classList.remove("show");
+  }
+});
+
+backToTop.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
