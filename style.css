@@ -3,7 +3,27 @@
   --accent: #c0d6df;
   --bg: #f4f4f2;
   --text: #444;
+  --nav-text: #f4f4f2;
+  --card-title: #2c3e50;
 }
+body.dark {
+  --primary: #f4f4f2;
+  --bg: #2c3e50;
+  --accent: #c0d6df;
+  --text: #ccc;
+  --nav-text: #ffffff;
+  --card-title: #f4f4f2;
+
+}
+body.dark .project-card {
+  background-color: #1e1e1e;
+  border-color: #444;
+}
+body.dark .modal-content {
+  background-color: #1e1e1e;
+  color: var(--primary);
+}
+
 
 /* Reset & Base */
 * {
@@ -21,13 +41,6 @@ body {
 }
 body {
   transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-body.dark {
-  --primary: #f4f4f2;
-  --bg: #2c3e50;
-  --accent: #c0d6df;
-  --text: #ccc;
 }
 
 html {
@@ -70,7 +83,7 @@ nav ul {
 }
 
 nav a {
-  color: var(--bg);
+  color: var(--nav-text);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -222,7 +235,7 @@ section p {
 .project-card h3 {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
-  color: var(--primary);
+  color: var(--card-title);
 }
 
 .project-card p {
@@ -458,5 +471,18 @@ footer.visible {
 
 #back-to-top.show {
   opacity: 1;
+}
+body {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+.project-card,
+nav a,
+footer,
+header {
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+.project-card,
+.modal-content {
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
