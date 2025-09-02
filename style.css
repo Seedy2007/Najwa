@@ -16,6 +16,7 @@ body {
 /* Navigation */
 header {
   background-color: transparent;
+  backdrop-filter: blur(4px);
   color: #fff;
   padding: 1rem 2rem;
   position: sticky;
@@ -233,4 +234,11 @@ header.scrolled {
   section {
     padding: 2rem 1rem;
   }
+}
+.project-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+html {
+  scroll-behavior: smooth;
 }
