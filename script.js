@@ -107,7 +107,6 @@ closeButton.addEventListener("click", () => {
 
 window.addEventListener("click", (e) => {
   if (e.target === modal) {
-    modal.style.display = "none";
     modal.classList.remove("show");
     document.body.style.overflow = "auto";
   }
