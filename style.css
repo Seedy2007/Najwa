@@ -436,7 +436,7 @@ footer.visible {
   transform: scaleX(0);
   transition: transform 0.6s ease;
 }
-.section-divider.visible {
+.section-divider.active {
   transform: scaleX(1);
 }
 /* Image zoom on hover (project cards) */
@@ -454,4 +454,38 @@ footer.visible {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
+}
+.fade-in,
+.slide-up,
+.contact-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.active,
+.slide-up.active,
+.contact-animate.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+#scroll-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: var(--accent);
+  width: 0;
+  z-index: 9999;
+  transition: width 0.2s ease;
+}
+.contact-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.contact-animate.active {
+  opacity: 1;
+  transform: translateY(0);
 }
