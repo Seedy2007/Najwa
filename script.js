@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Fade-in and slide-up animations
+  // Fade-in and slide-up animations with staggered delay
   const animatedElements = document.querySelectorAll(".fade-in, .slide-up");
+  animatedElements.forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.2}s`;
+  });
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
@@ -15,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Project cards fade-in after featured section is visible
   const featuredSection = document.getElementById("featured");
-
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -29,7 +31,23 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }, { threshold: 0.3 });
 
-  sectionObserver.observe(featuredSection);
+  if (featuredSection) sectionObserver.observe(featuredSection);
+
+  // Section divider animation
+  document.querySelectorAll(".section-divider").forEach((divider, i) => {
+    divider.style.transitionDelay = `${i * 0.2}s`;
+
+    const dividerObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          dividerObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    dividerObserver.observe(divider);
+  });
 });
 
 // Scroll effects
@@ -39,15 +57,13 @@ window.addEventListener("scroll", () => {
   const scrollBar = document.getElementById("scroll-bar");
 
   // Nav fade-in
-  if (window.scrollY > 50) {
-    header.classList.add("scrolled");
-  } else {
-    header.classList.remove("scrolled");
-  }
+  header.classList.toggle("scrolled", window.scrollY > 50);
 
-  // Parallax effect
-  const offset = window.scrollY * 0.2;
-  heroText.style.transform = `translateY(${offset}px)`;
+  // Combined parallax effect
+  const scrollOffset = window.scrollY * 0.2;
+  const mouseOffset = heroText.dataset.mouseOffset || "0,0";
+  const [mx, my] = mouseOffset.split(",").map(Number);
+  heroText.style.transform = `translate(${mx}px, ${scrollOffset + my}px)`;
 
   // Scroll progress bar
   const scrollTop = window.scrollY;
@@ -56,9 +72,16 @@ window.addEventListener("scroll", () => {
   scrollBar.style.width = `${scrollPercent}%`;
 });
 
+// Mouse-follow parallax on hero
+document.querySelector("#hero").addEventListener("mousemove", (e) => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 5;
+  const y = (e.clientY / window.innerHeight - 0.5) * 5;
+  const heroText = document.querySelector(".hero-text");
+  heroText.dataset.mouseOffset = `${x},${y}`;
+});
+
 // Hero text fade-in
 const heroText = document.querySelector(".hero-text");
-
 const heroObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -68,11 +91,10 @@ const heroObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 
-heroObserver.observe(heroText);
+if (heroText) heroObserver.observe(heroText);
 
 // Contact section animation
 const contactSection = document.querySelector(".contact-animate");
-
 const contactObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -82,11 +104,10 @@ const contactObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 
-contactObserver.observe(contactSection);
+if (contactSection) contactObserver.observe(contactSection);
 
 // Footer animation
 const footer = document.querySelector("footer");
-
 const footerObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -96,7 +117,7 @@ const footerObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.3 });
 
-footerObserver.observe(footer);
+if (footer) footerObserver.observe(footer);
 
 // Modal viewer
 const modal = document.getElementById("modal");
@@ -129,29 +150,4 @@ window.addEventListener("click", (e) => {
     modal.classList.remove("show");
     document.body.style.overflow = "auto";
   }
-});
-
-// Mouse-follow parallax on hero
-document.querySelector("#hero").addEventListener("mousemove", (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 10;
-  const y = (e.clientY / window.innerHeight - 0.5) * 10;
-  document.querySelector(".hero-text").style.transform = `translate(${x}px, ${y}px)`;
-});
-// Scroll-triggered staggered section reveals
-const sections = document.querySelectorAll("section");
-sections.forEach((section, i) => {
-  section.style.transitionDelay = `${i * 0.2}s`;
-});
-// animation for the section devider
-document.querySelectorAll(".section-divider").forEach(divider => {
-  const dividerObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        dividerObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  dividerObserver.observe(divider);
 });
