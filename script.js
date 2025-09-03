@@ -54,14 +54,6 @@ window.addEventListener("scroll", () => {
   const docHeight = document.body.scrollHeight - window.innerHeight;
   const scrollPercent = (scrollTop / docHeight) * 100;
   scrollBar.style.width = `${scrollPercent}%`;
-
-  // Back to top button
-  const backToTop = document.getElementById("back-to-top");
-  if (window.scrollY > 300) {
-    backToTop.classList.add("show");
-  } else {
-    backToTop.classList.remove("show");
-  }
 });
 
 // Hero text fade-in
@@ -137,11 +129,4 @@ window.addEventListener("click", (e) => {
     modal.classList.remove("show");
     document.body.style.overflow = "auto";
   }
-});
-
-// Back to top button
-const backToTop = document.getElementById("back-to-top");
-
-backToTop.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
 });
