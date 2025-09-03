@@ -130,3 +130,28 @@ window.addEventListener("click", (e) => {
     document.body.style.overflow = "auto";
   }
 });
+
+// Mouse-follow parallax on hero
+document.querySelector("#hero").addEventListener("mousemove", (e) => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 10;
+  const y = (e.clientY / window.innerHeight - 0.5) * 10;
+  document.querySelector(".hero-text").style.transform = `translate(${x}px, ${y}px)`;
+});
+// Scroll-triggered staggered section reveals
+const sections = document.querySelectorAll("section");
+sections.forEach((section, i) => {
+  section.style.transitionDelay = `${i * 0.2}s`;
+});
+// animation for the section devider
+document.querySelectorAll(".section-divider").forEach(divider => {
+  const dividerObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        dividerObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  dividerObserver.observe(divider);
+});

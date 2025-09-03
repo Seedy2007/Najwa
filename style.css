@@ -429,3 +429,29 @@ footer.visible {
     font-size: 0.95rem;
   }
 }
+/* Section divider animation */
+.section-divider {
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform 0.6s ease;
+}
+.section-divider.visible {
+  transform: scaleX(1);
+}
+/* Image zoom on hover (project cards) */
+.project-card img {
+  transition: transform 0.3s ease;
+}
+.project-card:hover img {
+  transform: scale(1.05);
+}
+/* CTA pulse or hover animation */
+.cta-link:hover {
+  animation: pulse 0.6s ease;
+}
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
