@@ -94,7 +94,9 @@ nav a:focus {
 /* Hero Section */
 #hero {
   height: 100vh;
-  background: url('hero.jpg') center center / cover no-repeat fixed;
+  background: url('hero.jpg') center center / cover no-repeat;
+  background-attachment: scroll;
+  background-position: center 0;
   display: flex;
   justify-content: center;
   align-items: center;

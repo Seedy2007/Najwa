@@ -151,3 +151,8 @@ window.addEventListener("click", (e) => {
     document.body.style.overflow = "auto";
   }
 });
+const hero = document.getElementById("hero");
+window.addEventListener("scroll", () => {
+  const offset = window.scrollY * 0.5;
+  hero.style.backgroundPosition = `center ${offset}px`;
+});
