@@ -1,176 +1,119 @@
 // =======================
-// DOMContentLoaded Events
+// Config
+// =======================
+const config = {
+  delays: {
+    stagger: 0.2,
+    divider: 0.2,
+    projectCard: 0.2
+  },
+  thresholds: {
+    fadeSlide: 0.2,
+    featured: 0.3,
+    divider: 0.1,
+    hero: 0.3,
+    contact: 0.3,
+    footer: 0.3
+  }
+};
+
+// =======================
+// DOM Ready Container
 // =======================
 document.addEventListener("DOMContentLoaded", () => {
+  // === Setup Functions ===
   setupAnimatedElements();
   observeFeaturedSection();
   observeSectionDividers();
-});
+  setupHeroMouseParallax();
+  setupHeroObserver();
+  setupContactObserver();
+  setupFooterObserver();
+  setupModalViewer();
 
-// =======================
-// Scroll Effects
-// =======================
-window.addEventListener("scroll", () => {
-  handleHeaderScroll();
-  applyHeroParallax();
-  updateScrollProgress();
-  updateHeroBackground();
-});
-
-// =======================
-// Mouse Parallax on Hero
-// =======================
-document.querySelector("#hero").addEventListener("mousemove", (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 5;
-  const y = (e.clientY / window.innerHeight - 0.5) * 5;
-  const heroText = document.querySelector(".hero-text");
-  heroText.dataset.mouseOffset = `${x},${y}`;
-});
-
-// =======================
-// Intersection Observers
-// =======================
-setupHeroObserver();
-setupContactObserver();
-setupFooterObserver();
-
-// =======================
-// Modal Viewer
-// =======================
-setupModalViewer();
-
-// =======================
-// Functions
-// =======================
-
-function setupAnimatedElements() {
-  const animatedElements = document.querySelectorAll(".fade-in, .slide-up");
-  animatedElements.forEach((el, i) => {
-    el.style.transitionDelay = `${i * 0.2}s`;
+  // === Scroll Effects ===
+  window.addEventListener("scroll", () => {
+    handleHeaderScroll();
+    applyHeroParallax();
+    updateScrollProgress();
+    updateHeroBackground();
   });
+});
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
+// =======================
+// Utility Functions
+// =======================
+function createObserver(callback, threshold = 0.3) {
+  return new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add("active");
+        callback(entry.target);
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.2 });
+  }, { threshold });
+}
 
-  animatedElements.forEach((el) => observer.observe(el));
+// =======================
+// Setup Functions
+// =======================
+function setupAnimatedElements() {
+  const elements = document.querySelectorAll(".fade-in, .slide-up");
+  elements.forEach((el, i) => {
+    el.style.transitionDelay = `${i * config.delays.stagger}s`;
+  });
+
+  const observer = createObserver(el => el.classList.add("active"), config.thresholds.fadeSlide);
+  elements.forEach(el => observer.observe(el));
 }
 
 function observeFeaturedSection() {
-  const featuredSection = document.getElementById("featured");
-  if (!featuredSection) return;
+  const section = document.getElementById("featured");
+  if (!section) return;
 
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const projectCards = document.querySelectorAll(".project-card");
-        projectCards.forEach((card, index) => {
-          card.style.transitionDelay = `${index * 0.2}s`;
-          card.classList.add("visible");
-        });
-        sectionObserver.unobserve(entry.target);
-      }
+  const observer = createObserver(() => {
+    const cards = document.querySelectorAll(".project-card");
+    cards.forEach((card, i) => {
+      card.style.transitionDelay = `${i * config.delays.projectCard}s`;
+      card.classList.add("visible");
     });
-  }, { threshold: 0.3 });
+  }, config.thresholds.featured);
 
-  sectionObserver.observe(featuredSection);
+  observer.observe(section);
 }
 
 function observeSectionDividers() {
-  document.querySelectorAll(".section-divider").forEach((divider, i) => {
-    divider.style.transitionDelay = `${i * 0.2}s`;
-
-    const dividerObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("active");
-          dividerObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    dividerObserver.observe(divider);
+  const dividers = document.querySelectorAll(".section-divider");
+  dividers.forEach((divider, i) => {
+    divider.style.transitionDelay = `${i * config.delays.divider}s`;
   });
-}
 
-function handleHeaderScroll() {
-  const header = document.querySelector("header");
-  header.classList.toggle("scrolled", window.scrollY > 50);
-}
-
-function applyHeroParallax() {
-  const heroText = document.querySelector(".hero-text");
-  const scrollOffset = window.scrollY * 0.2;
-  const mouseOffset = heroText.dataset.mouseOffset || "0,0";
-  const [mx, my] = mouseOffset.split(",").map(Number);
-  heroText.style.transform = `translate(${mx}px, ${scrollOffset + my}px)`;
-}
-
-function updateScrollProgress() {
-  const scrollBar = document.getElementById("scroll-bar");
-  const scrollTop = window.scrollY;
-  const docHeight = document.body.scrollHeight - window.innerHeight;
-  const scrollPercent = (scrollTop / docHeight) * 100;
-  scrollBar.style.width = `${scrollPercent}%`;
-}
-
-function updateHeroBackground() {
-  const hero = document.getElementById("hero");
-  const offset = window.scrollY * 0.5;
-  hero.style.backgroundPosition = `center ${offset}px`;
+  const observer = createObserver(el => el.classList.add("active"), config.thresholds.divider);
+  dividers.forEach(divider => observer.observe(divider));
 }
 
 function setupHeroObserver() {
   const heroText = document.querySelector(".hero-text");
   if (!heroText) return;
 
-  const heroObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        heroObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  heroObserver.observe(heroText);
+  const observer = createObserver(el => el.classList.add("visible"), config.thresholds.hero);
+  observer.observe(heroText);
 }
 
 function setupContactObserver() {
-  const contactSection = document.querySelector(".contact-animate");
-  if (!contactSection) return;
+  const contact = document.querySelector(".contact-animate");
+  if (!contact) return;
 
-  const contactObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("active");
-        contactObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  contactObserver.observe(contactSection);
+  const observer = createObserver(el => el.classList.add("active"), config.thresholds.contact);
+  observer.observe(contact);
 }
 
 function setupFooterObserver() {
   const footer = document.querySelector("footer");
   if (!footer) return;
 
-  const footerObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        footerObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  footerObserver.observe(footer);
+  const observer = createObserver(el => el.classList.add("visible"), config.thresholds.footer);
+  observer.observe(footer);
 }
 
 function setupModalViewer() {
@@ -196,7 +139,7 @@ function setupModalViewer() {
   });
 
   closeButton.addEventListener("click", closeModal);
-  window.addEventListener("click", (e) => {
+  window.addEventListener("click", e => {
     if (e.target === modal) closeModal();
   });
 
@@ -204,4 +147,54 @@ function setupModalViewer() {
     modal.classList.remove("show");
     document.body.style.overflow = "auto";
   }
+}
+
+function setupHeroMouseParallax() {
+  const hero = document.querySelector("#hero");
+  if (!hero) return;
+
+  hero.addEventListener("mousemove", e => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 5;
+    const y = (e.clientY / window.innerHeight - 0.5) * 5;
+    const heroText = document.querySelector(".hero-text");
+    if (heroText) {
+      heroText.dataset.mouseOffset = `${x},${y}`;
+    }
+  });
+}
+
+// =======================
+// Scroll Handlers
+// =======================
+function handleHeaderScroll() {
+  const header = document.querySelector("header");
+  header.classList.toggle("scrolled", window.scrollY > 50);
+}
+
+function applyHeroParallax() {
+  const heroText = document.querySelector(".hero-text");
+  if (!heroText) return;
+
+  const scrollOffset = window.scrollY * 0.2;
+  const mouseOffset = heroText.dataset.mouseOffset || "0,0";
+  const [mx, my] = mouseOffset.split(",").map(Number);
+  heroText.style.transform = `translate(${mx}px, ${scrollOffset + my}px)`;
+}
+
+function updateScrollProgress() {
+  const scrollBar = document.getElementById("scroll-bar");
+  if (!scrollBar) return;
+
+  const scrollTop = window.scrollY;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const scrollPercent = (scrollTop / docHeight) * 100;
+  scrollBar.style.width = `${scrollPercent}%`;
+}
+
+function updateHeroBackground() {
+  const hero = document.getElementById("hero");
+  if (!hero) return;
+
+  const offset = window.scrollY * 0.5;
+  hero.style.backgroundPosition = `center ${offset}px`;
 }
