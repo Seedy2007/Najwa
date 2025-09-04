@@ -103,6 +103,13 @@ nav a:focus {
   text-align: center;
   position: relative;
   overflow: hidden;
+  opacity: 0;
+  transition: opacity 1s ease;
+  background-color: #f4f4f2; /* fallback color */
+}
+
+#hero.bg-loaded {
+  opacity: 1;
 }
 
 .hero-overlay {

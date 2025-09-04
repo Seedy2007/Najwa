@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setupContactObserver();
   setupFooterObserver();
   setupModalViewer();
+  preloadHeroBackground();
 
   // === Scroll Effects ===
   window.addEventListener("scroll", () => {
@@ -162,6 +163,19 @@ function setupHeroMouseParallax() {
     }
   });
 }
+
+function preloadHeroBackground() {
+  const hero = document.getElementById("hero");
+  if (!hero) return;
+
+  const img = new Image();
+  img.src = 'hero.jpg';
+  img.onload = () => {
+    hero.style.backgroundImage = "url('hero.jpg')";
+    hero.classList.add("bg-loaded");
+  };
+}
+
 
 // =======================
 // Scroll Handlers
