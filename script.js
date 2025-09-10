@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initTypewriterEffect();
     initFixedHeroBackground();
     initNavigationHideShow();
+    initProfileCardParallax(); // Added back profile card parallax
 });
 
 // Smooth scrolling for navigation links
@@ -85,7 +86,6 @@ function initProjectModals() {
             // Get project details
             const title = this.querySelector('h3').textContent;
             const description = this.querySelector('p').textContent;
-            const imageClass = Array.from(this.querySelector('.project-image').classList).find(cls => cls.startsWith('project-'));
             const imageUrl = getComputedStyle(this.querySelector('.project-image')).backgroundImage.slice(5, -2);
             
             // Create modal
@@ -154,8 +154,8 @@ function initScrollDownButton() {
             });
         });
         
-        // Remove the bounce animation
-        scrollDownBtn.style.animation = 'none';
+        // Add pulsing animation instead of bounce
+        scrollDownBtn.style.animation = 'pulse 2s infinite';
     }
 }
 
@@ -253,6 +253,24 @@ function initNavigationHideShow() {
         
         lastScrollY = currentScrollY;
     }, 100));
+}
+
+// Profile card parallax effect (added back)
+function initProfileCardParallax() {
+    const profileCard = document.querySelector('.profile-blur');
+    const heroSection = document.getElementById('hero');
+    
+    if (profileCard && heroSection) {
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.3; // Slower rate for subtle effect
+            
+            // Only apply parallax within the hero section
+            if (scrolled < heroSection.offsetHeight) {
+                profileCard.style.transform = `translateY(${rate}px)`;
+            }
+        });
+    }
 }
 
 // Utility function for debouncing (for performance)
