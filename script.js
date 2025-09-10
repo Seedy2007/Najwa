@@ -1,4 +1,4 @@
-// script.js - Interactive features for Najwa's Interior Design website
+// script.js - Enhanced interactive features for Najwa's Interior Design website
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize all interactive elements
@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollDownButton();
     initNavigationEffects();
     initTypewriterEffect();
-    initParallaxEffect();
+    initFixedHeroBackground();
+    initNavigationHideShow();
 });
 
 // Smooth scrolling for navigation links
@@ -38,7 +39,7 @@ function initScrollAnimations() {
     const animatedElements = document.querySelectorAll('.about-content, .project-item, .contact-content');
     
     const observerOptions = {
-        threshold: 0.2,
+        threshold: 0.15,
         rootMargin: '0px 0px -50px 0px'
     };
     
@@ -63,23 +64,13 @@ function initProfileCardInteractions() {
     if (profileCard) {
         // Hover effect
         profileCard.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.05) translateY(-5px)';
-            this.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-            this.style.boxShadow = '0 12px 40px rgba(0, 0, 0, 0.3)';
+            this.style.transform = 'scale(1.05) translateY(-8px)';
+            this.style.boxShadow = '0 15px 45px rgba(0, 0, 0, 0.25)';
         });
         
         profileCard.addEventListener('mouseleave', function() {
             this.style.transform = 'scale(1) translateY(0)';
             this.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.2)';
-        });
-        
-        // Click effect
-        profileCard.addEventListener('mousedown', function() {
-            this.style.transform = 'scale(0.98) translateY(2px)';
-        });
-        
-        profileCard.addEventListener('mouseup', function() {
-            this.style.transform = 'scale(1.05) translateY(-5px)';
         });
     }
 }
@@ -94,7 +85,8 @@ function initProjectModals() {
             // Get project details
             const title = this.querySelector('h3').textContent;
             const description = this.querySelector('p').textContent;
-            const imageUrl = this.querySelector('.project-image').style.backgroundImage.slice(5, -2);
+            const imageClass = Array.from(this.querySelector('.project-image').classList).find(cls => cls.startsWith('project-'));
+            const imageUrl = getComputedStyle(this.querySelector('.project-image')).backgroundImage.slice(5, -2);
             
             // Create modal
             const modal = document.createElement('div');
@@ -106,13 +98,16 @@ function initProjectModals() {
                     <div class="modal-text">
                         <h3>${title}</h3>
                         <p>${description}</p>
-                        <button class="modal-close-btn">Close</button>
+                        <button class="modal-close-btn">Close Project</button>
                     </div>
                 </div>
             `;
             
             // Add modal to page
             body.appendChild(modal);
+            
+            // Disable body scroll when modal is open
+            document.body.style.overflow = 'hidden';
             
             // Show modal with animation
             setTimeout(() => {
@@ -124,7 +119,8 @@ function initProjectModals() {
                 modal.classList.remove('active');
                 setTimeout(() => {
                     body.removeChild(modal);
-                }, 300);
+                    document.body.style.overflow = 'auto';
+                }, 400);
             };
             
             modal.querySelector('.close-modal').addEventListener('click', closeModal);
@@ -132,6 +128,14 @@ function initProjectModals() {
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
                     closeModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function closeOnEscape(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    document.removeEventListener('keydown', closeOnEscape);
                 }
             });
         });
@@ -149,6 +153,9 @@ function initScrollDownButton() {
                 behavior: 'smooth'
             });
         });
+        
+        // Remove the bounce animation
+        scrollDownBtn.style.animation = 'none';
     }
 }
 
@@ -158,14 +165,6 @@ function initNavigationEffects() {
     const headerHeight = document.querySelector('#hero').offsetHeight;
     
     window.addEventListener('scroll', function() {
-        if (window.scrollY > headerHeight * 0.8) {
-            nav.style.opacity = '0.9';
-            nav.style.transform = 'translateY(-10px)';
-        } else {
-            nav.style.opacity = '1';
-            nav.style.transform = 'translateY(0)';
-        }
-        
         // Highlight active section in navigation
         const sections = document.querySelectorAll('section');
         let currentSection = '';
@@ -188,7 +187,7 @@ function initNavigationEffects() {
     });
 }
 
-// Typewriter effect for hero text (optional)
+// Typewriter effect for hero text
 function initTypewriterEffect() {
     const titleElement = document.querySelector('.profile-blur .title');
     
@@ -208,7 +207,7 @@ function initTypewriterEffect() {
         // Start effect when hero section is in view
         const observer = new IntersectionObserver(function(entries) {
             if (entries[0].isIntersecting) {
-                typeWriter();
+                setTimeout(typeWriter, 500);
                 observer.disconnect();
             }
         }, { threshold: 0.5 });
@@ -217,17 +216,43 @@ function initTypewriterEffect() {
     }
 }
 
-// Parallax effect for hero background
-function initParallaxEffect() {
+// Fixed hero background (no parallax)
+function initFixedHeroBackground() {
     const heroBackground = document.querySelector('.hero-background');
     
     if (heroBackground) {
+        // Remove any parallax effect and keep it fixed
+        heroBackground.style.position = 'fixed';
+        heroBackground.style.transform = 'none';
+        
+        // Reset any scroll event listeners that might affect it
         window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            heroBackground.style.transform = `translateY(${rate}px)`;
+            heroBackground.style.transform = 'none';
         });
     }
+}
+
+// Navigation hide/show when scrolling out of hero section
+function initNavigationHideShow() {
+    const nav = document.getElementById('main-nav');
+    const heroSection = document.getElementById('hero');
+    const heroHeight = heroSection.offsetHeight;
+    
+    let lastScrollY = window.scrollY;
+    
+    window.addEventListener('scroll', debounce(function() {
+        const currentScrollY = window.scrollY;
+        
+        // Show/hide based on scroll position and direction
+        if (currentScrollY > heroHeight * 0.7) {
+            nav.classList.add('hidden');
+        } else {
+            nav.classList.remove('hidden');
+            nav.classList.add('visible');
+        }
+        
+        lastScrollY = currentScrollY;
+    }, 100));
 }
 
 // Utility function for debouncing (for performance)
@@ -237,5 +262,19 @@ function debounce(func, wait) {
         const context = this, args = arguments;
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(context, args), wait);
+    };
+}
+
+// Utility function for throttling (for performance)
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
     };
 }
