@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initTypewriterEffect();
     initFixedHeroBackground();
     initNavigationHideShow();
-    initProfileCardParallax(); // Added back profile card parallax
+    initProfileCardParallax();
+    initContactItemsInteractions();
 });
 
 // Smooth scrolling for navigation links
@@ -154,8 +155,8 @@ function initScrollDownButton() {
             });
         });
         
-        // Add pulsing animation instead of bounce
-        scrollDownBtn.style.animation = 'pulse 2s infinite';
+        // Add floating animation
+        scrollDownBtn.style.animation = 'float 3s ease-in-out infinite';
     }
 }
 
@@ -238,24 +239,20 @@ function initNavigationHideShow() {
     const heroSection = document.getElementById('hero');
     const heroHeight = heroSection.offsetHeight;
     
-    let lastScrollY = window.scrollY;
-    
     window.addEventListener('scroll', debounce(function() {
         const currentScrollY = window.scrollY;
         
-        // Show/hide based on scroll position and direction
-        if (currentScrollY > heroHeight * 0.7) {
+        // Show/hide based on scroll position
+        if (currentScrollY > heroHeight * 0.8) {
             nav.classList.add('hidden');
         } else {
             nav.classList.remove('hidden');
             nav.classList.add('visible');
         }
-        
-        lastScrollY = currentScrollY;
     }, 100));
 }
 
-// Profile card parallax effect (added back)
+// Profile card parallax effect
 function initProfileCardParallax() {
     const profileCard = document.querySelector('.profile-blur');
     const heroSection = document.getElementById('hero');
@@ -263,14 +260,53 @@ function initProfileCardParallax() {
     if (profileCard && heroSection) {
         window.addEventListener('scroll', function() {
             const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.3; // Slower rate for subtle effect
+            const rate = scrolled * 0.2; // Positive rate to make it follow the scroll
             
             // Only apply parallax within the hero section
             if (scrolled < heroSection.offsetHeight) {
                 profileCard.style.transform = `translateY(${rate}px)`;
+                
+                // Add hover effect compatibility
+                if (!profileCard.matches(':hover')) {
+                    profileCard.style.transform = `translateY(${rate}px) scale(1)`;
+                }
             }
         });
     }
+}
+
+// Contact items interactions
+function initContactItemsInteractions() {
+    const contactItems = document.querySelectorAll('.contact-item');
+    
+    contactItems.forEach(item => {
+        item.addEventListener('click', function() {
+            // Copy to clipboard functionality
+            const text = this.querySelector('p').textContent;
+            
+            // Create temporary textarea for copying
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                
+                // Show feedback
+                const originalBg = this.style.background;
+                this.style.background = 'rgba(212, 175, 55, 0.2)';
+                
+                setTimeout(() => {
+                    this.style.background = originalBg;
+                }, 1000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+            
+            document.body.removeChild(textarea);
+        });
+    });
 }
 
 // Utility function for debouncing (for performance)
@@ -280,19 +316,5 @@ function debounce(func, wait) {
         const context = this, args = arguments;
         clearTimeout(timeout);
         timeout = setTimeout(() => func.apply(context, args), wait);
-    };
-}
-
-// Utility function for throttling (for performance)
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
     };
 }
