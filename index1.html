@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Loading Test - Najwa's Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        h1 {
+            color: #2c2c2c;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #d4af37;
+        }
+
+        h2 {
+            color: #2c2c2c;
+            margin: 25px 0 15px;
+            font-size: 1.8rem;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .font-sample {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            background: #f9f9f9;
+            border-left: 4px solid #d4af37;
+        }
+
+        .font-normal {
+            font-size: 1.5rem;
+        }
+
+        .font-bold {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .code {
+            font-family: monospace;
+            background: #2c2c2c;
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .success {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .error {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .test-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .test-area {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .test-box {
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+        }
+
+        .test-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c2c2c;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #d4af37;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            background: #c19d2e;
+            transform: translateY(-2px);
+        }
+
+        .solution {
+            background: #e8f4fc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #3498db;
+        }
+
+        .note {
+            background: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Font Loading Test for Najwa's Website</h1>
+        
+        <div class="solution">
+            <h2>Solution to Your Font Issue</h2>
+            <p>Based on your site structure, you should use one of these paths:</p>
+            <div class="code">
+                /* Option 1: Relative path (if CSS is in same folder as fonts folder) */<br>
+                src: url('fonts/ebrima.ttf') format('truetype');<br><br>
+                /* Option 2: Absolute path from root */<br>
+                src: url('/Najwa/fonts/ebrima.ttf') format('truetype');
+            </div>
+            <p class="success">Try changing your font path to: <code>url('fonts/ebrima.ttf')</code></p>
+        </div>
+
+        <h2>Testing Ebrima Font</h2>
+        <p>If the font is loaded correctly, the text below will appear in Ebrima:</p>
+        
+        <div class="test-area">
+            <div class="test-box">
+                <div class="test-title">Normal Weight (should use ebrima.ttf):</div>
+                <div class="font-sample font-normal" style="font-family: 'Ebrima', sans-serif;">
+                    The quick brown fox jumps over the lazy dog.<br>
+                    نجوا نظام - مصممة الديكور الداخلي
+                </div>
+            </div>
+            
+            <div class="test-box">
+                <div class="test-title">Bold Weight (should use ebrima-bold.ttf):</div>
+                <div class="font-sample font-bold" style="font-family: 'Ebrima', sans-serif;">
+                    The quick brown fox jumps over the lazy dog.<br>
+                    نجوا نظام - مصممة الديكور الداخلي
+                </div>
+            </div>
+        </div>
+
+        <div class="note">
+            <p><strong>Note:</strong> If you see the same font in both boxes, the bold version may not be loading correctly, or your browser may be synthesizing the bold style.</p>
+        </div>
+
+        <h2>Correct @font-face Implementation</h2>
+        <p>Here's how your CSS should look:</p>
+        <div class="code">
+            @font-face {<br>
+            &nbsp;&nbsp;font-family: 'Ebrima';<br>
+            &nbsp;&nbsp;src: url('fonts/ebrima.ttf') format('truetype');<br>
+            &nbsp;&nbsp;font-weight: normal;<br>
+            &nbsp;&nbsp;font-style: normal;<br>
+            }<br><br>
+            @font-face {<br>
+            &nbsp;&nbsp;font-family: 'Ebrima';<br>
+            &nbsp;&nbsp;src: url('fonts/ebrima-bold.ttf') format('truetype');<br>
+            &nbsp;&nbsp;font-weight: bold;<br>
+            &nbsp;&nbsp;font-style: normal;<br>
+            }<br><br>
+            body {<br>
+            &nbsp;&nbsp;font-family: 'Ebrima', sans-serif;<br>
+            }
+        </div>
+
+        <h2>Next Steps</h2>
+        <p>1. Verify your font files are in the <code>fonts</code> folder</p>
+        <p>2. Check that the filenames match exactly (case-sensitive!)</p>
+        <p>3. Update your CSS with the correct path</p>
+        <p>4. Clear your browser cache before testing again</p>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="https://seedy2007.github.io/Najwa/" class="btn">Back to Your Website</a>
+            <button onclick="window.location.reload()" class="btn">Reload Test</button>
+        </div>
+    </div>
+</body>
+</html>
