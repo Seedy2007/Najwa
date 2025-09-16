@@ -14,6 +14,7 @@ body {
     color: #333;
     line-height: 1.6;
     overflow-x: hidden;
+    font-family: 'Ebrima', sans-serif;
 }
 
 section {
@@ -616,4 +617,18 @@ footer {
         margin-right: 0;
         margin-bottom: 10px;
     }
+}
+
+@font-face {
+  font-family: 'Ebrima';
+  src: url('./fonts/ebrima.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ebrima';
+  src: url('./fonts/ebrima-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
 }
