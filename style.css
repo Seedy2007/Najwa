@@ -621,14 +621,14 @@ footer {
 
 @font-face {
   font-family: 'Ebrima';
-  src: url('./fonts/ebrima.ttf') format('truetype');
+  src: url('/Najwa/fonts/ebrima.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Ebrima';
-  src: url('./fonts/ebrima-bold.ttf') format('truetype');
+  src: url('/Najwa/fonts/ebrima-bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
 }
